@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>Widget Saeko - Amavis.AI</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Página de demostración del widget Saeko para Amavis.AI">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#000000">
+
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://storage.googleapis.com https://saeko-voice-api-647383010347.us-central1.run.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' https: blob:; connect-src 'self' https://storage.googleapis.com https://saeko-voice-api-647383010347.us-central1.run.app https: wss:; object-src 'none'; base-uri 'self'; form-action 'self'">
+
+  <!-- Preconnect for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://storage.googleapis.com">
+  <link rel="preconnect" href="https://saeko-voice-api-647383010347.us-central1.run.app">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- RemixIcon for Modern Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/webp" href="assets/images/webp/logos/favicon.webp">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    .widget-page-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+      color: #ffffff;
+    }
+
+    .widget-page-content {
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .widget-page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .widget-page-description {
+      font-size: 1.125rem;
+      color: #cccccc;
+      margin-bottom: 3rem;
+      line-height: 1.6;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      margin-top: 2rem;
+    }
+
+    .back-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .widget-info {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-top: 3rem;
+      text-align: left;
+    }
+
+    .widget-info h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .widget-info p {
+      color: #cccccc;
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .widget-page-title {
+        font-size: 2rem;
+      }
+
+      .widget-page-description {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="widget-page-container">
+    <div class="widget-page-content">
+      <h1 class="widget-page-title">Widget Saeko</h1>
+      <p class="widget-page-description">
+        Esta página incluye el widget de Saeko. El widget aparecerá en la esquina inferior derecha de la página.
+        Haz clic en el botón "Hablar ahora" para interactuar con el asistente de voz.
+      </p>
+
+      <div class="widget-info">
+        <h3>Información del Widget</h3>
+        <p><strong>Organización:</strong> Saeko</p>
+        <p><strong>Campaña:</strong> CAMPAIGN_1</p>
+        <p><strong>Idioma:</strong> Español (es)</p>
+        <p><strong>Posición:</strong> Esquina inferior derecha</p>
+        <p><strong>Tema:</strong> Automático (se adapta al sistema)</p>
+      </div>
+
+      <a href="index.html" class="back-link">
+        <i class="ri-arrow-left-line"></i>
+        Volver a la página principal
+      </a>
+    </div>
+  </div>
+
+  <!-- Amavis Widget Script -->
+  <script src="https://storage.googleapis.com/amavis-web-static/widget.js" data-org="amavis" data-campaign="ai-workshop"
+    data-label="Speak with Maddie" data-lang="en" data-theme="auto" data-position="bottom-right"
+    data-embed-base="https://storage.googleapis.com/amavis-web-static"
+    data-api="https://amavis-voice-api-djyty76xwq-km.a.run.app" async></script>
+</body>
+
+</html>
