@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-  <title>Widget Saeko - Amavis.AI</title>
+  <title>Widget Amavis - Amavis.AI</title>
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Página de demostración del widget Saeko para Amavis.AI">
+  <meta name="description" content="Amavis widget demonstration page for Amavis.AI">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#000000">
 
@@ -17,13 +17,13 @@
   <meta http-equiv="X-XSS-Protection" content="1; mode=block">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://storage.googleapis.com https://saeko-voice-api-647383010347.us-central1.run.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' https: blob:; connect-src 'self' https://storage.googleapis.com https://saeko-voice-api-647383010347.us-central1.run.app https: wss:; object-src 'none'; base-uri 'self'; form-action 'self'">
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://storage.googleapis.com https://amavis-voice-api-djyty76xwq-km.a.run.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' https: blob:; connect-src 'self' https://storage.googleapis.com https://amavis-voice-api-djyty76xwq-km.a.run.app https: wss:; object-src 'none'; base-uri 'self'; form-action 'self'">
 
   <!-- Preconnect for Performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://storage.googleapis.com">
-  <link rel="preconnect" href="https://saeko-voice-api-647383010347.us-central1.run.app">
+  <link rel="preconnect" href="https://amavis-voice-api-djyty76xwq-km.a.run.app">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
@@ -127,33 +127,26 @@
 <body>
   <div class="widget-page-container">
     <div class="widget-page-content">
-      <h1 class="widget-page-title">Widget Saeko</h1>
+      <h1 class="widget-page-title">Widget Amavis</h1>
       <p class="widget-page-description">
-        Esta página incluye el widget de Saeko. El widget aparecerá en la esquina inferior derecha de la página.
-        Haz clic en el botón "Hablar ahora" para interactuar con el asistente de voz.
+        This page includes the Amavis widget. The widget will appear in the bottom right corner of the page.
+        Click on the "Speak with Maddie" button to interact with the voice assistant.
       </p>
 
-      <div class="widget-info">
-        <h3>Información del Widget</h3>
-        <p><strong>Organización:</strong> Saeko</p>
-        <p><strong>Campaña:</strong> CAMPAIGN_1</p>
-        <p><strong>Idioma:</strong> Español (es)</p>
-        <p><strong>Posición:</strong> Esquina inferior derecha</p>
-        <p><strong>Tema:</strong> Automático (se adapta al sistema)</p>
-      </div>
+      <!-- Amavis Widget Script -->
+      <script src="https://storage.googleapis.com/amavis-web-static/widget.js" data-org="amavis"
+        data-campaign="ai-workshop" data-label="Speak with Maddie" data-lang="en" data-theme="auto"
+        data-position="center" data-embed-base="https://storage.googleapis.com/amavis-web-static"
+        data-api="https://amavis-voice-api-djyty76xwq-km.a.run.app" async></script>
 
       <a href="index.html" class="back-link">
         <i class="ri-arrow-left-line"></i>
-        Volver a la página principal
+        Back to main page
       </a>
     </div>
   </div>
 
-  <!-- Amavis Widget Script -->
-  <script src="https://storage.googleapis.com/amavis-web-static/widget.js" data-org="amavis" data-campaign="ai-workshop"
-    data-label="Speak with Maddie" data-lang="en" data-theme="auto" data-position="bottom-right"
-    data-embed-base="https://storage.googleapis.com/amavis-web-static"
-    data-api="https://amavis-voice-api-djyty76xwq-km.a.run.app" async></script>
+
 </body>
 
 </html>
