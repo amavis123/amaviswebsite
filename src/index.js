@@ -25,11 +25,12 @@ export default {
         };
       </script>`;
 
-					// Inject the config script before the widget container
-					const widgetContainerMarker = '<!-- Vapi Widget will be loaded dynamically after config is available -->';
+					// Inject the config script in the <head> section (before any scripts)
+					// This ensures it's available before the widget initialization script runs
+					const headEndMarker = '</head>';
 					const modifiedHtml = html.replace(
-						widgetContainerMarker,
-						'<!-- Vapi configuration injected by Cloudflare Worker -->' + configScript + '\n      ' + widgetContainerMarker
+						headEndMarker,
+						'  <!-- Vapi configuration injected by Cloudflare Worker (keys are NOT in source code) -->' + configScript + '\n' + headEndMarker
 					);
 
 					return new Response(modifiedHtml, {

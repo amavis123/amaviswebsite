@@ -17,7 +17,7 @@
   <meta http-equiv="X-XSS-Protection" content="1; mode=block">
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://storage.googleapis.com https://amavis-voice-api-djyty76xwq-km.a.run.app; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' https: blob:; connect-src 'self' https://storage.googleapis.com https://amavis-voice-api-djyty76xwq-km.a.run.app https: wss:; frame-src 'self' https://storage.googleapis.com; child-src 'self' https://storage.googleapis.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://storage.googleapis.com https://amavis-voice-api-djyty76xwq-km.a.run.app https://unpkg.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' https: blob:; connect-src 'self' https://storage.googleapis.com https://amavis-voice-api-djyty76xwq-km.a.run.app https: wss:; frame-src 'self' https://storage.googleapis.com; child-src 'self' https://storage.googleapis.com; object-src 'none'; base-uri 'self'; form-action 'self'">
 
   <!-- Preconnect for Performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -129,76 +129,55 @@
     <div class="widget-page-content">
       <h1 class="widget-page-title">Agent Alex</h1>
       <p class="widget-page-description">
-        This page includes the Alex agent. The agent will appear in the bottom center of the page.
-        Click on the "Speak with Alex" button to interact with the agent.
+
       </p>
 
-      <!-- Vapi Widget will be loaded dynamically after config is available -->
+      <!-- Vapi Widget will be loaded dynamically by Worker -->
       <div id="vapi-widget-container"></div>
-
-      <!-- Vapi configuration: Injected by Worker if available, otherwise loaded from file -->
-      <script>
-        // If Worker didn't inject config, load from file (for Cloudflare Pages)
-        if (!window.VAPI_CONFIG) {
-          const script = document.createElement('script');
-          script.src = 'assets/js/vapi-config.js';
-          script.onerror = function () {
-            console.error('Vapi config not found. For Workers: Set VAPI_ASSISTANT_ID and VAPI_PUBLIC_KEY. For Pages: Upload vapi-config.js to production.');
-          };
-          document.head.appendChild(script);
-        }
-      </script>
 
       <!-- Load Vapi widget SDK -->
       <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async
         type="text/javascript"></script>
 
-      <!-- Initialize widget after SDK and config are loaded -->
+      <!-- Initialize widget after SDK loads (config will be injected by Worker) -->
       <script>
         (function () {
           function initVapiWidget() {
-            // Check if config is available
+            // Check if config was injected by Worker
             if (!window.VAPI_CONFIG) {
-              console.error('VAPI_CONFIG not found. Make sure vapi-config.js is loaded.');
+              console.error('VAPI_CONFIG not found. Worker should inject this automatically.');
               return;
             }
 
             const widgetContainer = document.getElementById('vapi-widget-container');
             if (!widgetContainer) {
-              console.error('Vapi widget container not found');
               return;
             }
 
-            // Check if custom element is defined (script has loaded)
+            // Wait for custom element to be defined
             if (!customElements.get('vapi-widget')) {
-              // Wait for the script to load and define the custom element
               const script = document.querySelector('script[src*="widget.umd.js"]');
               if (script) {
                 script.addEventListener('load', function () {
-                  // Give the script a moment to register the custom element
                   setTimeout(initVapiWidget, 100);
                 });
               } else {
-                // Retry if script tag not found yet
                 setTimeout(initVapiWidget, 100);
               }
               return;
             }
 
-            // Create the widget element with secure config
+            // Create widget with config injected by Worker
             const widget = document.createElement('vapi-widget');
             widget.setAttribute('assistant-id', window.VAPI_CONFIG.assistantId);
             widget.setAttribute('public-key', window.VAPI_CONFIG.publicKey);
-
             widgetContainer.appendChild(widget);
           }
 
-          // Start initialization when DOM is ready
           if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initVapiWidget);
           } else {
-            // If config script loads after DOM, wait a bit
-            setTimeout(initVapiWidget, 50);
+            setTimeout(initVapiWidget, 100);
           }
         })();
       </script>
