@@ -132,55 +132,12 @@
 
       </p>
 
-      <!-- Vapi Widget will be loaded dynamically by Worker -->
-      <div id="vapi-widget-container"></div>
+      <vapi-widget assistant-id="fabb1f08-48b5-4635-ae21-40b2f9bac8ed"
+        public-key="4b14f51b-da4e-4656-8fd4-1e0dc53044b8"></vapi-widget>
 
-      <!-- Load Vapi widget SDK -->
       <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async
         type="text/javascript"></script>
 
-      <!-- Initialize widget after SDK loads (config will be injected by Worker) -->
-      <script>
-        (function () {
-          function initVapiWidget() {
-            // Check if config was injected by Worker
-            if (!window.VAPI_CONFIG) {
-              console.error('VAPI_CONFIG not found. Worker should inject this automatically.');
-              return;
-            }
-
-            const widgetContainer = document.getElementById('vapi-widget-container');
-            if (!widgetContainer) {
-              return;
-            }
-
-            // Wait for custom element to be defined
-            if (!customElements.get('vapi-widget')) {
-              const script = document.querySelector('script[src*="widget.umd.js"]');
-              if (script) {
-                script.addEventListener('load', function () {
-                  setTimeout(initVapiWidget, 100);
-                });
-              } else {
-                setTimeout(initVapiWidget, 100);
-              }
-              return;
-            }
-
-            // Create widget with config injected by Worker
-            const widget = document.createElement('vapi-widget');
-            widget.setAttribute('assistant-id', window.VAPI_CONFIG.assistantId);
-            widget.setAttribute('public-key', window.VAPI_CONFIG.publicKey);
-            widgetContainer.appendChild(widget);
-          }
-
-          if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initVapiWidget);
-          } else {
-            setTimeout(initVapiWidget, 100);
-          }
-        })();
-      </script>
     </div>
 
 </body>
