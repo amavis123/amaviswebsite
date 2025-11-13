@@ -42,3 +42,9 @@ build/
 # Cloudflare Workers specific
 worker/
 .mf/
+
+# Vapi widget configuration (contains sensitive keys)
+# IMPORTANT: This file should be uploaded manually to production
+# For Cloudflare Pages: Upload vapi-config.js directly to the site
+# For Workers: The Worker will inject the config automatically
+public/assets/js/vapi-config.js

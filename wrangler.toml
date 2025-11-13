@@ -10,5 +10,7 @@ head_sampling_rate = 1
 directory = "./public"
 binding = "ASSETS"
 
-# Environment variables (set using: wrangler secret put ANAM_API_KEY)
+# Environment variables (set using: wrangler secret put <VARIABLE_NAME>)
 # ANAM_API_KEY - API key for Anam.ai service
+# VAPI_ASSISTANT_ID - Vapi widget assistant ID (for alex.html)
+# VAPI_PUBLIC_KEY - Vapi widget public key (for alex.html)

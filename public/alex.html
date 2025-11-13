@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-  <title>Widget Amavis - Amavis.AI</title>
+  <title>Alex Amavis - Car dealer</title>
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Amavis widget demonstration page for Amavis.AI">
+  <meta name="description" content="Alex Amavis - Car dealer">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#000000">
 
@@ -127,20 +127,82 @@
 <body>
   <div class="widget-page-container">
     <div class="widget-page-content">
-      <h1 class="widget-page-title">Agent Maddie</h1>
+      <h1 class="widget-page-title">Agent Alex</h1>
       <p class="widget-page-description">
-        This page includes the Maddie agent. The agent will appear in the bottom center of the page.
-        Click on the "Speak with Maddie" button to interact with the agent.
+        This page includes the Alex agent. The agent will appear in the bottom center of the page.
+        Click on the "Speak with Alex" button to interact with the agent.
       </p>
 
-      <!-- Maddie Agent Script -->
-      <script src="https://storage.googleapis.com/amavis-web-static/maddie.js" data-org="amavis"
-        data-campaign="ai-workshop" data-label="Speak with Maddie" data-lang="en" data-theme="auto"
-        data-position="center" data-embed-base="https://storage.googleapis.com/amavis-web-static"
-        data-api="https://amavis-voice-api-djyty76xwq-km.a.run.app" async></script>
-    </div>
-  </div>
+      <!-- Vapi Widget will be loaded dynamically after config is available -->
+      <div id="vapi-widget-container"></div>
 
+      <!-- Vapi configuration: Injected by Worker if available, otherwise loaded from file -->
+      <script>
+        // If Worker didn't inject config, load from file (for Cloudflare Pages)
+        if (!window.VAPI_CONFIG) {
+          const script = document.createElement('script');
+          script.src = 'assets/js/vapi-config.js';
+          script.onerror = function () {
+            console.error('Vapi config not found. For Workers: Set VAPI_ASSISTANT_ID and VAPI_PUBLIC_KEY. For Pages: Upload vapi-config.js to production.');
+          };
+          document.head.appendChild(script);
+        }
+      </script>
+
+      <!-- Load Vapi widget SDK -->
+      <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async
+        type="text/javascript"></script>
+
+      <!-- Initialize widget after SDK and config are loaded -->
+      <script>
+        (function () {
+          function initVapiWidget() {
+            // Check if config is available
+            if (!window.VAPI_CONFIG) {
+              console.error('VAPI_CONFIG not found. Make sure vapi-config.js is loaded.');
+              return;
+            }
+
+            const widgetContainer = document.getElementById('vapi-widget-container');
+            if (!widgetContainer) {
+              console.error('Vapi widget container not found');
+              return;
+            }
+
+            // Check if custom element is defined (script has loaded)
+            if (!customElements.get('vapi-widget')) {
+              // Wait for the script to load and define the custom element
+              const script = document.querySelector('script[src*="widget.umd.js"]');
+              if (script) {
+                script.addEventListener('load', function () {
+                  // Give the script a moment to register the custom element
+                  setTimeout(initVapiWidget, 100);
+                });
+              } else {
+                // Retry if script tag not found yet
+                setTimeout(initVapiWidget, 100);
+              }
+              return;
+            }
+
+            // Create the widget element with secure config
+            const widget = document.createElement('vapi-widget');
+            widget.setAttribute('assistant-id', window.VAPI_CONFIG.assistantId);
+            widget.setAttribute('public-key', window.VAPI_CONFIG.publicKey);
+
+            widgetContainer.appendChild(widget);
+          }
+
+          // Start initialization when DOM is ready
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initVapiWidget);
+          } else {
+            // If config script loads after DOM, wait a bit
+            setTimeout(initVapiWidget, 50);
+          }
+        })();
+      </script>
+    </div>
 
 </body>
 
