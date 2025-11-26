@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Amavis.AI - Make AI your unfair advantage website",
   "scripts": {
+    "build": "echo 'Static build complete'",
     "deploy": "echo 'Static site - no deployment needed'"
   }
 }
