@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Voice AI Commercials Calculator | Amavis.AI</title>
+  <meta name="description"
+    content="Model dealership-level ROI, group rollups, and agency profit for the Voice AI commercials program.">
+  <link rel="icon" type="image/webp" href="assets/images/webp/logos/favicon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --calculator-surface: rgba(8, 12, 24, 0.6);
+      --calculator-stroke: rgba(255, 255, 255, 0.08);
+      --calculator-highlight: linear-gradient(130deg, #0ea5e9, #0d9488);
+      --calculator-card: rgba(12, 19, 39, 0.85);
+      --calculator-text: #e2e8f0;
+      --calculator-muted: #94a3b8;
+      --calculator-danger: #f87171;
+      --calculator-success: #34d399;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    body.calculator-body {
+      background: radial-gradient(circle at top, #030712 0%, #020617 45%, #01040c 100%);
+      color: var(--calculator-text);
+      min-height: 100vh;
+    }
+
+    .calculator-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 140px 1.5rem 80px;
+    }
+
+    .calculator-hero {
+      background: rgba(3, 7, 18, 0.85);
+      border: 1px solid var(--calculator-stroke);
+      border-radius: 32px;
+      padding: 48px;
+      box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+
+    .calculator-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.25), transparent 55%);
+      z-index: 0;
+    }
+
+    .calculator-hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 1.25rem;
+      max-width: 720px;
+    }
+
+    .calculator-badge {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #22d3ee;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .calculator-badge::before {
+      content: '';
+      width: 28px;
+      height: 2px;
+      background: var(--calculator-highlight);
+    }
+
+    .calculator-hero h1 {
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #fff;
+      margin: 0;
+    }
+
+    .calculator-hero p {
+      color: var(--calculator-muted);
+      font-size: 1.1rem;
+      max-width: 560px;
+    }
+
+    .calculator-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .calculator-actions .cta-button.secondary {
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--calculator-text);
+    }
+
+    .calculator-section {
+      background: rgba(2, 6, 23, 0.7);
+      border: 1px solid var(--calculator-stroke);
+      border-radius: 32px;
+      padding: 48px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+    }
+
+    .calculator-shell {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .calculator-summary {
+      display: grid;
+      gap: 1rem;
+      max-width: 640px;
+    }
+
+    .calculator-summary h2 {
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    .calculator-summary p {
+      color: var(--calculator-muted);
+      font-size: 1rem;
+    }
+
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .calculator-column {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .calculator-card {
+      background: var(--calculator-card);
+      border: 1px solid var(--calculator-stroke);
+      border-radius: 24px;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .highlight-card {
+      border-color: rgba(14, 165, 233, 0.4);
+      background: rgba(13, 148, 136, 0.12);
+    }
+
+    .card-header {
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+    }
+
+    .card-header p {
+      margin-top: 0.35rem;
+      color: var(--calculator-muted);
+      font-size: 0.95rem;
+    }
+
+    .input-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .input-group label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--calculator-muted);
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(15, 23, 42, 0.7);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.95rem 1rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-group input:focus {
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25);
+      outline: none;
+    }
+
+    .metrics-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .metric-row:last-child {
+      border-bottom: none;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--calculator-muted);
+    }
+
+    .metric-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      text-align: right;
+    }
+
+    .metric-value.accent {
+      color: var(--calculator-success);
+    }
+
+    .metric-value.negative {
+      color: var(--calculator-danger);
+    }
+
+    .live-pill {
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: #67e8f9;
+      border: 1px solid rgba(103, 232, 249, 0.5);
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .blur-surface {
+      border-radius: 20px;
+      padding: 1.25rem;
+      border: 1px dashed rgba(148, 163, 184, 0.25);
+      background: rgba(15, 23, 42, 0.45);
+      font-size: 0.85rem;
+      color: var(--calculator-muted);
+    }
+
+    .note-text {
+      font-size: 0.85rem;
+      color: var(--calculator-muted);
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .footer {
+      margin-top: 72px;
+    }
+
+    @media (max-width: 1024px) {
+
+      .calculator-hero,
+      .calculator-section {
+        padding: 32px;
+      }
+
+      .calculator-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .input-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .calculator-main {
+        padding: 120px 1rem 60px;
+      }
+
+      .calculator-hero,
+      .calculator-section {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body class="calculator-body">
+  <nav class="navigation" id="navigation" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <div class="nav-logo-card" id="nav-logo-card">
+        <img src="assets/images/webp/logos/amavis-wordmark.webp" alt="Amavis.AI" class="nav-logo-icon">
+      </div>
+    </div>
+  </nav>
+
+  <main class="calculator-main">
+    <section class="calculator-hero">
+      <div class="calculator-hero-content">
+        <span class="calculator-badge">Voice AI Revenue Model</span>
+        <h1 id="calculatorTitle">Voice AI Commercials Calculator</h1>
+        <p>Model the impact of AI-handled outbound calls for each dealership, roll it up across your agency group, and
+          reveal agency-side profitability when needed.</p>
+        <div class="calculator-actions">
+          <button type="button" class="cta-button secondary" id="scrollToCalculator">Skip to Calculator</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="calculator-section" id="calculator">
+      <div class="calculator-shell">
+        <div class="calculator-summary">
+          <h2>Dial in your assumptions</h2>
+          <p>Update any field to see voice AI ROI, dealership profitability, and agency rollups adjust in real time.</p>
+          <div class="blur-surface">
+            Tip: tap the page title five times to expose agency-only metrics and the internal cost slider.
+          </div>
+        </div>
+
+        <div class="calculator-grid">
+          <div class="calculator-column">
+            <article class="calculator-card highlight-card">
+              <div class="card-header">
+                <h3>Scaling Inputs</h3>
+                <p>Number of live sites and any blended retainer discount.</p>
+              </div>
+              <div class="input-grid">
+                <div class="input-group">
+                  <label for="numDealerships">Num of Dealerships (N)</label>
+                  <input type="number" id="numDealerships" value="7" min="1">
+                </div>
+                <div class="input-group">
+                  <label for="retainerDiscount">Retainer Discount (%)</label>
+                  <input type="number" id="retainerDiscount" value="10" min="0" max="100" step="1">
+                </div>
+              </div>
+            </article>
+
+            <article class="calculator-card">
+              <div class="card-header">
+                <h3>Call Volume & Deal Value</h3>
+                <p>How many appointments we convert and the value of each service.</p>
+              </div>
+              <div class="input-grid">
+                <div class="input-group">
+                  <label for="callsPerMonth">Calls per Month</label>
+                  <input type="number" id="callsPerMonth" value="1000" min="1">
+                </div>
+                <div class="input-group">
+                  <label for="conversionRate">Conversion Rate (%)</label>
+                  <input type="number" id="conversionRate" value="10" min="0.1" step="0.1">
+                </div>
+                <div class="input-group">
+                  <label for="dealershipProfitPerBooking">Dealership Profit / Service ($)</label>
+                  <input type="number" id="dealershipProfitPerBooking" value="100" min="10" step="10">
+                </div>
+                <div class="input-group hidden" id="agency-cost-input-container">
+                  <label for="agencyCostPerCall">Agency Cost / Call ($)</label>
+                  <input type="number" id="agencyCostPerCall" value="0.50" min="0.01" step="0.01">
+                </div>
+              </div>
+            </article>
+
+            <article class="calculator-card">
+              <div class="card-header">
+                <h3>Pricing Structure</h3>
+                <p>Fees charged to each dealership location.</p>
+              </div>
+              <div class="input-grid">
+                <div class="input-group">
+                  <label for="agencyRetainer">Monthly Retainer ($)</label>
+                  <input type="number" id="agencyRetainer" value="2000" min="0" step="100">
+                </div>
+                <div class="input-group">
+                  <label for="agencyCommission">Commission / Booking ($)</label>
+                  <input type="number" id="agencyCommission" value="15" min="0" step="1">
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="calculator-column">
+            <article class="calculator-card">
+              <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                  <h3>Group Summary</h3>
+                  <p>Aggregated across all active dealerships.</p>
+                </div>
+                <span class="live-pill">Live</span>
+              </div>
+              <div class="metrics-grid">
+                <div class="metric-row">
+                  <p class="metric-label">Total Calls</p>
+                  <p id="groupTotalCalls" class="metric-value">7,000</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Total Bookings</p>
+                  <p id="groupTotalBookings" class="metric-value">700</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Total Group Cost (Dealership)</p>
+                  <p id="groupDealershipCost" class="metric-value negative">$24,500.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Total Group Net Profit</p>
+                  <p id="groupDealershipNetProfit" class="metric-value accent">$45,500.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Group ROI</p>
+                  <p id="groupDealershipROI" class="metric-value accent">185.71%</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="calculator-card hidden" id="agency-results-container">
+              <div class="card-header">
+                <h3>Agency Profitability</h3>
+                <p>Revealed for internal planning only.</p>
+              </div>
+              <div class="metrics-grid">
+                <div class="metric-row">
+                  <p class="metric-label">Net Monthly Retainer (Per)</p>
+                  <p id="agencyRetainerRevenue" class="metric-value">$2,000.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Net Commission (Per)</p>
+                  <p id="agencyCommissionRevenue" class="metric-value">$1,500.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Net Revenue (Per)</p>
+                  <p id="agencyTotalRevenue" class="metric-value">$3,500.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Cost (Per)</p>
+                  <p id="agencyTotalCost" class="metric-value negative">$500.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Net Monthly Profit (Per)</p>
+                  <p id="agencyNetProfit" class="metric-value accent">$3,000.00</p>
+                </div>
+                <div id="group-rollup" class="metrics-grid hidden">
+                  <div class="metric-row">
+                    <p class="metric-label">Net Retainer (Group)</p>
+                    <p id="groupRetainerRevenue" class="metric-value">$2,000.00</p>
+                  </div>
+                  <div class="metric-row">
+                    <p class="metric-label">Net Commission (Group)</p>
+                    <p id="groupCommissionRevenue" class="metric-value">$1,500.00</p>
+                  </div>
+                  <div class="metric-row">
+                    <p class="metric-label">Net Revenue (Group)</p>
+                    <p id="groupAgencyRevenue" class="metric-value">$3,500.00</p>
+                  </div>
+                  <div class="metric-row">
+                    <p class="metric-label">Total Group Cost (Agency)</p>
+                    <p id="groupAgencyCost" class="metric-value negative">$500.00</p>
+                  </div>
+                  <div class="metric-row">
+                    <p class="metric-label">Total Group Net Profit</p>
+                    <p id="groupAgencyNetProfit" class="metric-value accent">$3,000.00</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="calculator-card">
+              <div class="card-header">
+                <h3>Dealership Value (Per Location)</h3>
+                <p>What a single rooftop sees each month.</p>
+              </div>
+              <div class="metrics-grid">
+                <div class="metric-row">
+                  <p class="metric-label">Monthly Bookings</p>
+                  <p id="dealershipMonthlyBookings" class="metric-value">100</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Gross Profit</p>
+                  <p id="dealershipGrossProfit" class="metric-value accent">$10,000.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Retainer Charged</p>
+                  <p id="dealershipRetainerCharged" class="metric-value negative">$1,800.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Commissions Charged</p>
+                  <p id="dealershipCommissionCharged" class="metric-value negative">$1,500.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Total Cost (Agency Fees)</p>
+                  <p id="dealershipTotalCost" class="metric-value negative">$3,300.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">Net Profit</p>
+                  <p id="dealershipNetProfit" class="metric-value accent">$6,700.00</p>
+                </div>
+                <div class="metric-row">
+                  <p class="metric-label">ROI</p>
+                  <p id="dealershipROI" class="metric-value accent">203%</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <p class="note-text">Need a custom view? Duplicate the page and plug in channel-specific pricing.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <img src="assets/images/webp/logos/amavis-logo.webp" alt="Amavis.AI" width="150" height="auto">
+        </div>
+        <div class="footer-text">
+          <p>&copy; 2025 Amavis.AI Pty Ltd. All rights reserved. | Making AI your unfair advantage.</p>
+          <p class="footer-legal-text">All content protected by intellectual property laws. Unauthorized use prohibited.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js" defer></script>
+  <script>
+    const inputs = [
+      'numDealerships', 'retainerDiscount', 'callsPerMonth', 'conversionRate',
+      'dealershipProfitPerBooking', 'agencyCostPerCall', 'agencyRetainer', 'agencyCommission'
+    ];
+
+    const outputs = {
+      // Per Dealership
+      agencyTotalCost: document.getElementById('agencyTotalCost'),
+      agencyRetainerRevenue: document.getElementById('agencyRetainerRevenue'),
+      agencyCommissionRevenue: document.getElementById('agencyCommissionRevenue'),
+      agencyTotalRevenue: document.getElementById('agencyTotalRevenue'),
+      agencyNetProfit: document.getElementById('agencyNetProfit'),
+      dealershipMonthlyBookings: document.getElementById('dealershipMonthlyBookings'),
+      dealershipGrossProfit: document.getElementById('dealershipGrossProfit'),
+      dealershipRetainerCharged: document.getElementById('dealershipRetainerCharged'),
+      dealershipCommissionCharged: document.getElementById('dealershipCommissionCharged'),
+      dealershipTotalCost: document.getElementById('dealershipTotalCost'),
+      dealershipNetProfit: document.getElementById('dealershipNetProfit'),
+      dealershipROI: document.getElementById('dealershipROI'),
+
+      // Group
+      groupTotalCalls: document.getElementById('groupTotalCalls'),
+      groupTotalBookings: document.getElementById('groupTotalBookings'),
+      groupRetainerRevenue: document.getElementById('groupRetainerRevenue'),
+      groupCommissionRevenue: document.getElementById('groupCommissionRevenue'),
+      groupAgencyRevenue: document.getElementById('groupAgencyRevenue'),
+      groupAgencyCost: document.getElementById('groupAgencyCost'),
+      groupDealershipCost: document.getElementById('groupDealershipCost'),
+      groupAgencyNetProfit: document.getElementById('groupAgencyNetProfit'),
+      groupDealershipNetProfit: document.getElementById('groupDealershipNetProfit'),
+      groupDealershipROI: document.getElementById('groupDealershipROI')
+    };
+
+    const groupRollupContainer = document.getElementById('group-rollup');
+
+    const numberFormatter = new Intl.NumberFormat('en-US', {
+      maximumFractionDigits: 0
+    });
+
+    const currencyFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2
+    });
+
+    function formatCurrency(value) {
+      return currencyFormatter.format(value);
+    }
+
+    function formatNumber(value) {
+      return numberFormatter.format(value);
+    }
+
+    function calculateProfits() {
+      const numDealerships = parseFloat(document.getElementById('numDealerships').value) || 1;
+      const retainerDiscount = (parseFloat(document.getElementById('retainerDiscount').value) || 0) / 100;
+      const callsPerMonth = parseFloat(document.getElementById('callsPerMonth').value) || 0;
+      const conversionRate = parseFloat(document.getElementById('conversionRate').value) || 0;
+      const dealershipProfitPerBooking = parseFloat(document.getElementById('dealershipProfitPerBooking').value) || 0;
+      const agencyCostPerCall = parseFloat(document.getElementById('agencyCostPerCall').value) || 0;
+      const baseAgencyRetainer = parseFloat(document.getElementById('agencyRetainer').value) || 0;
+      const agencyCommission = parseFloat(document.getElementById('agencyCommission').value) || 0;
+
+      const dealershipRetainerCharged = baseAgencyRetainer * (1 - retainerDiscount);
+      const monthlyBookingsPerDealership = callsPerMonth * (conversionRate / 100);
+
+      const agencyTotalCostPerDealership = callsPerMonth * agencyCostPerCall;
+      const agencyCommissionRevenuePerDealership = monthlyBookingsPerDealership * agencyCommission;
+      const agencyTotalRevenuePerDealership = dealershipRetainerCharged + agencyCommissionRevenuePerDealership;
+      const agencyNetProfitPerDealership = agencyTotalRevenuePerDealership - agencyTotalCostPerDealership;
+
+      const dealershipGrossProfitPerDealership = monthlyBookingsPerDealership * dealershipProfitPerBooking;
+      const dealershipTotalCostPerDealership = agencyTotalRevenuePerDealership;
+      const dealershipNetProfitPerDealership = dealershipGrossProfitPerDealership - dealershipTotalCostPerDealership;
+      let dealershipROI = 0;
+      if (dealershipTotalCostPerDealership > 0) {
+        dealershipROI = (dealershipNetProfitPerDealership / dealershipTotalCostPerDealership) * 100;
+      } else if (dealershipNetProfitPerDealership > 0) {
+        dealershipROI = Infinity;
+      }
+
+      const groupTotalCalls = callsPerMonth * numDealerships;
+      const groupTotalBookings = monthlyBookingsPerDealership * numDealerships;
+      const groupRetainerRevenue = dealershipRetainerCharged * numDealerships;
+      const groupCommissionRevenue = agencyCommissionRevenuePerDealership * numDealerships;
+      const groupAgencyRevenue = agencyTotalRevenuePerDealership * numDealerships;
+      const groupAgencyCost = agencyTotalCostPerDealership * numDealerships;
+      const groupAgencyNetProfit = agencyNetProfitPerDealership * numDealerships;
+      const groupDealershipCost = dealershipTotalCostPerDealership * numDealerships;
+      const groupDealershipNetProfit = dealershipNetProfitPerDealership * numDealerships;
+
+      let groupDealershipROI = 0;
+      if (groupDealershipCost > 0) {
+        groupDealershipROI = (groupDealershipNetProfit / groupDealershipCost) * 100;
+      } else if (groupDealershipNetProfit > 0) {
+        groupDealershipROI = Infinity;
+      }
+
+      outputs.agencyTotalCost.textContent = formatCurrency(agencyTotalCostPerDealership);
+      outputs.agencyRetainerRevenue.textContent = formatCurrency(dealershipRetainerCharged);
+      outputs.agencyCommissionRevenue.textContent = formatCurrency(agencyCommissionRevenuePerDealership);
+      outputs.agencyTotalRevenue.textContent = formatCurrency(agencyTotalRevenuePerDealership);
+      outputs.agencyNetProfit.textContent = formatCurrency(agencyNetProfitPerDealership);
+      outputs.dealershipMonthlyBookings.textContent = formatNumber(monthlyBookingsPerDealership);
+      outputs.dealershipGrossProfit.textContent = formatCurrency(dealershipGrossProfitPerDealership);
+      outputs.dealershipRetainerCharged.textContent = formatCurrency(dealershipRetainerCharged);
+      outputs.dealershipCommissionCharged.textContent = formatCurrency(agencyCommissionRevenuePerDealership);
+      outputs.dealershipTotalCost.textContent = formatCurrency(dealershipTotalCostPerDealership);
+      outputs.dealershipNetProfit.textContent = formatCurrency(dealershipNetProfitPerDealership);
+      outputs.dealershipROI.textContent = Number.isFinite(dealershipROI)
+        ? `${dealershipROI.toFixed(2)}%`
+        : '∞ ROI';
+
+      outputs.groupTotalCalls.textContent = formatNumber(groupTotalCalls);
+      outputs.groupTotalBookings.textContent = formatNumber(groupTotalBookings);
+      outputs.groupRetainerRevenue.textContent = formatCurrency(groupRetainerRevenue);
+      outputs.groupCommissionRevenue.textContent = formatCurrency(groupCommissionRevenue);
+      outputs.groupAgencyRevenue.textContent = formatCurrency(groupAgencyRevenue);
+      outputs.groupAgencyCost.textContent = formatCurrency(groupAgencyCost);
+      outputs.groupDealershipCost.textContent = formatCurrency(groupDealershipCost);
+      outputs.groupDealershipNetProfit.textContent = formatCurrency(groupDealershipNetProfit);
+      outputs.groupAgencyNetProfit.textContent = formatCurrency(groupAgencyNetProfit);
+
+      outputs.groupDealershipROI.textContent = Number.isFinite(groupDealershipROI)
+        ? `${groupDealershipROI.toFixed(2)}%`
+        : '∞ ROI';
+
+      outputs.groupDealershipCost.classList.toggle('text-red-300', true);
+      outputs.groupDealershipNetProfit.classList.toggle('negative', groupDealershipNetProfit < 0);
+      outputs.groupDealershipNetProfit.classList.toggle('accent', groupDealershipNetProfit >= 0);
+      outputs.groupDealershipROI.classList.toggle('negative', groupDealershipNetProfit < 0);
+      outputs.groupDealershipROI.classList.toggle('accent', groupDealershipNetProfit >= 0);
+
+      outputs.agencyNetProfit.classList.toggle('negative', agencyNetProfitPerDealership < 0);
+      outputs.agencyNetProfit.classList.toggle('accent', agencyNetProfitPerDealership >= 0);
+      outputs.groupAgencyNetProfit.classList.toggle('negative', groupAgencyNetProfit < 0);
+      outputs.groupAgencyNetProfit.classList.toggle('accent', groupAgencyNetProfit >= 0);
+
+      outputs.dealershipNetProfit.classList.toggle('negative', dealershipNetProfitPerDealership < 0);
+      outputs.dealershipNetProfit.classList.toggle('accent', dealershipNetProfitPerDealership >= 0);
+      outputs.dealershipROI.classList.toggle('negative', dealershipNetProfitPerDealership < 0);
+      outputs.dealershipROI.classList.toggle('accent', dealershipNetProfitPerDealership >= 0);
+
+      if (groupRollupContainer) {
+        groupRollupContainer.classList.toggle('hidden', numDealerships <= 1);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', calculateProfits);
+        }
+      });
+
+      const titleTrigger = document.getElementById('calculatorTitle');
+      const agencyResultsContainer = document.getElementById('agency-results-container');
+      const agencyCostInputContainer = document.getElementById('agency-cost-input-container');
+      const scrollButton = document.getElementById('scrollToCalculator');
+      let clickCount = 0;
+
+      if (titleTrigger) {
+        titleTrigger.addEventListener('click', () => {
+          const containers = [agencyResultsContainer, agencyCostInputContainer];
+          const anyHidden = containers.some(el => el && el.classList.contains('hidden'));
+
+          if (anyHidden) {
+            clickCount++;
+            if (clickCount >= 5) {
+              containers.forEach(el => el && el.classList.remove('hidden'));
+              if (groupRollupContainer) {
+                groupRollupContainer.classList.remove('hidden');
+              }
+              clickCount = 0;
+            }
+          } else {
+            containers.forEach(el => el && el.classList.add('hidden'));
+            if (groupRollupContainer) {
+              groupRollupContainer.classList.add('hidden');
+            }
+            clickCount = 0;
+          }
+        });
+      }
+
+      if (scrollButton) {
+        scrollButton.addEventListener('click', () => {
+          const calculatorSection = document.getElementById('calculator');
+          if (calculatorSection) {
+            calculatorSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      }
+
+      calculateProfits();
+    });
+  </script>
+</body>
+
+</html>
