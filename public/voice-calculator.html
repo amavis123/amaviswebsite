@@ -372,7 +372,8 @@
                 </div>
                 <div class="input-group hidden" id="retainer-discount-container">
                   <label for="retainerDiscount">Retainer Discount (%)</label>
-                  <input type="number" id="retainerDiscount" value="0" min="0" max="100" step="1" readonly>
+                  <div class="metric-value" id="retainerDiscountDisplay">0%</div>
+                  <input type="number" id="retainerDiscount" value="0" min="0" max="100" step="1" class="hidden">
                 </div>
               </div>
             </article>
@@ -387,9 +388,10 @@
                   <label for="callsPerMonth">Calls per Month</label>
                   <input type="number" id="callsPerMonth" value="1000" min="1">
                 </div>
-                <div class="input-group hidden" id="conversion-rate-container">
+                <div class="input-group">
                   <label for="conversionRate">Conversion Rate (%)</label>
-                  <input type="number" id="conversionRate" value="10" min="0" step="5" readonly>
+                  <div class="metric-value" id="conversionRateDisplay">10%</div>
+                  <input type="number" id="conversionRate" value="10" min="0" step="5" class="hidden">
                 </div>
                 <div class="input-group">
                   <label for="dealershipProfitPerBooking">Average Profit / Service Booking ($)</label>
@@ -622,9 +624,9 @@
 
     function calculateProfits() {
       const numDealerships = parseFloat(document.getElementById('numDealerships').value) || 1;
-      const retainerDiscount = 0; // Fixed at 0
+      const retainerDiscount = (parseFloat(document.getElementById('retainerDiscount').value) || 0) / 100;
       const callsPerMonth = parseFloat(document.getElementById('callsPerMonth').value) || 0;
-      const conversionRate = 10; // Fixed at 10%
+      const conversionRate = parseFloat(document.getElementById('conversionRate').value) || 10;
       const dealershipProfitPerBooking = parseFloat(document.getElementById('dealershipProfitPerBooking').value) || 0;
       const agencyCostPerCall = parseFloat(document.getElementById('agencyCostPerCall').value) || 0;
       const baseAgencyRetainer = parseFloat(document.getElementById('agencyRetainer').value) || 2000;
@@ -694,14 +696,23 @@
         ? `${groupDealershipROI.toFixed(2)}%`
         : '∞ ROI';
 
-      // Update display labels for retainer and commission
+      // Update display labels for retainer, commission, retainer discount, and conversion rate
       const agencyRetainerDisplay = document.getElementById('agencyRetainerDisplay');
       const agencyCommissionDisplay = document.getElementById('agencyCommissionDisplay');
+      const retainerDiscountDisplay = document.getElementById('retainerDiscountDisplay');
+      const conversionRateDisplay = document.getElementById('conversionRateDisplay');
+
       if (agencyRetainerDisplay) {
         agencyRetainerDisplay.textContent = formatCurrency(baseAgencyRetainer);
       }
       if (agencyCommissionDisplay) {
         agencyCommissionDisplay.textContent = formatCurrency(agencyCommission);
+      }
+      if (retainerDiscountDisplay) {
+        retainerDiscountDisplay.textContent = `${(retainerDiscount * 100).toFixed(0)}%`;
+      }
+      if (conversionRateDisplay) {
+        conversionRateDisplay.textContent = `${conversionRate.toFixed(0)}%`;
       }
 
       outputs.groupDealershipCost.classList.toggle('text-red-300', true);
@@ -736,19 +747,22 @@
       const titleTrigger = document.getElementById('calculatorTitle');
       const agencyResultsContainer = document.getElementById('agency-results-container');
       const agencyCostInputContainer = document.getElementById('agency-cost-input-container');
-      const retainerDiscountContainer = document.getElementById('retainer-discount-container');
-      const conversionRateContainer = document.getElementById('conversion-rate-container');
       const agencyRetainerInput = document.getElementById('agencyRetainer');
       const agencyRetainerDisplay = document.getElementById('agencyRetainerDisplay');
       const agencyCommissionInput = document.getElementById('agencyCommission');
       const agencyCommissionDisplay = document.getElementById('agencyCommissionDisplay');
+      const retainerDiscountContainer = document.getElementById('retainer-discount-container');
+      const retainerDiscountInput = document.getElementById('retainerDiscount');
+      const retainerDiscountDisplay = document.getElementById('retainerDiscountDisplay');
+      const conversionRateInput = document.getElementById('conversionRate');
+      const conversionRateDisplay = document.getElementById('conversionRateDisplay');
       const scrollButton = document.getElementById('scrollToCalculator');
       let clickCount = 0;
       let agencyModeActive = false;
 
       if (titleTrigger) {
         titleTrigger.addEventListener('click', () => {
-          const containers = [agencyResultsContainer, agencyCostInputContainer, retainerDiscountContainer, conversionRateContainer];
+          const containers = [agencyResultsContainer, agencyCostInputContainer, retainerDiscountContainer];
           const anyHidden = containers.some(el => el && el.classList.contains('hidden'));
 
           if (anyHidden) {
@@ -758,7 +772,7 @@
               if (groupRollupContainer) {
                 groupRollupContainer.classList.remove('hidden');
               }
-              // Switch to input mode for retainer and commission
+              // Switch to input mode for retainer, commission, retainer discount, and conversion rate
               if (agencyRetainerDisplay && agencyRetainerInput) {
                 agencyRetainerDisplay.classList.add('hidden');
                 agencyRetainerInput.classList.remove('hidden');
@@ -766,6 +780,14 @@
               if (agencyCommissionDisplay && agencyCommissionInput) {
                 agencyCommissionDisplay.classList.add('hidden');
                 agencyCommissionInput.classList.remove('hidden');
+              }
+              if (retainerDiscountDisplay && retainerDiscountInput) {
+                retainerDiscountDisplay.classList.add('hidden');
+                retainerDiscountInput.classList.remove('hidden');
+              }
+              if (conversionRateDisplay && conversionRateInput) {
+                conversionRateDisplay.classList.add('hidden');
+                conversionRateInput.classList.remove('hidden');
               }
               agencyModeActive = true;
               clickCount = 0;
@@ -775,7 +797,7 @@
             if (groupRollupContainer) {
               groupRollupContainer.classList.add('hidden');
             }
-            // Switch back to display mode for retainer and commission
+            // Switch back to display mode for retainer, commission, retainer discount, and conversion rate
             if (agencyRetainerDisplay && agencyRetainerInput) {
               agencyRetainerDisplay.classList.remove('hidden');
               agencyRetainerInput.classList.add('hidden');
@@ -783,6 +805,14 @@
             if (agencyCommissionDisplay && agencyCommissionInput) {
               agencyCommissionDisplay.classList.remove('hidden');
               agencyCommissionInput.classList.add('hidden');
+            }
+            if (retainerDiscountDisplay && retainerDiscountInput) {
+              retainerDiscountDisplay.classList.remove('hidden');
+              retainerDiscountInput.classList.add('hidden');
+            }
+            if (conversionRateDisplay && conversionRateInput) {
+              conversionRateDisplay.classList.remove('hidden');
+              conversionRateInput.classList.add('hidden');
             }
             agencyModeActive = false;
             clickCount = 0;
