@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Pitch Deck | Amavis.AI</title>
+  <link rel="icon" type="image/webp" href="assets/images/webp/logos/favicon.webp" />
+  <style>
+    :root {
+      --bg: #020617;
+      --surface: #020617;
+      --border: rgba(148, 163, 184, 0.4);
+      --accent: #0ea5e9;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      background: radial-gradient(circle at top, #030712 0%, #020617 45%, #000 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 96px 1.5rem 40px;
+      width: 100%;
+    }
+
+    header {
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      font-weight: 700;
+    }
+
+    p.subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .toolbar {
+      margin: 16px 0 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toolbar-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease, transform 0.05s ease;
+    }
+
+    .button span.icon {
+      font-size: 0.95rem;
+    }
+
+    .button.primary {
+      border-color: rgba(56, 189, 248, 0.6);
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.35), transparent 55%),
+        linear-gradient(120deg, #0ea5e9, #22c55e);
+    }
+
+    .button.primary {
+      color: #0b1120;
+    }
+
+    .button:hover {
+      border-color: var(--accent);
+      transform: translateY(-0.5px);
+    }
+
+    .viewer-shell {
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.08), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.04), transparent 60%),
+        rgba(15, 23, 42, 0.98);
+      overflow: hidden;
+      min-height: min(90vh, 900px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .viewer-frame {
+      flex: 1 1 auto;
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    .fallback {
+      padding: 16px 18px;
+      border-top: 1px solid rgba(148, 163, 184, 0.35);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .fallback p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .fallback strong {
+      color: var(--text);
+    }
+
+    @media (max-width: 768px) {
+      .shell {
+        padding-top: 80px;
+      }
+
+      .viewer-shell {
+        min-height: 75vh;
+      }
+
+      .fallback {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <header>
+      <h1>Amavis.AI Pitch Deck</h1>
+      <p class="subtitle">View or download the latest investor presentation directly in your browser.</p>
+
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <span class="badge">PDF • Read Only</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="viewer-shell" aria-label="Pitch deck PDF viewer">
+      <iframe class="viewer-frame" src="assets/pitch-deck-amavis.pdf" title="Amavis.AI Pitch Deck PDF"></iframe>
+      <div class="fallback">
+        <p>
+          <strong>Having trouble viewing the PDF?</strong>
+          Your browser might not support embedded documents.
+        </p>
+        <a class="button" href="assets/pitch-deck-amavis.pdf" target="_blank" rel="noopener noreferrer">
+          <span class="icon">🔗</span>
+          <span>Open in new tab</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
